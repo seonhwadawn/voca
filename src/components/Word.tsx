@@ -1,6 +1,20 @@
 import { useState } from "react";
 // w로 새로운 변수명 할당
-export default function Word({ word: w }) {
+
+interface IProps {
+  word: IWord;
+  // any남발금물
+}
+// 여러개의 프로퍼티 각각 다른 타입 입력가능
+// export 사용하면 다른 파일에서도 가능
+export interface IWord {
+  day: string;
+  eng: string;
+  kor: string;
+  isDone: boolean;
+  id: number;
+}
+export default function Word({ word: w }: IProps) {
   const [word, setWord] = useState(w);
   const [isShow, setIsShow] = useState(false);
   const [isDone, setIsDone] = useState(word.isDone);
@@ -32,7 +46,11 @@ export default function Word({ word: w }) {
       }).then((res) => {
         if (res.ok) {
           //삭제시화면 반영
-          setWord({ id: 0 });
+          setWord({
+            // deepcopy
+            ...word,
+            id: 0,
+          });
         }
       });
     }

@@ -2,12 +2,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import Word from "./Word";
+import Word, { IWord } from "./Word";
 
 export default function Day() {
   // useParams로 무슨날짜인지 확인
-  const { day } = useParams();
-  const words = useFetch(`http://localhost:3002/words?day=${day}`);
+  //  {}를 이용해 어떤 타입을 사용할지 설정할 수 있음
+  const { day } = useParams<{ day: string }>();
+  const words: IWord[] = useFetch(`http://localhost:3002/words?day=${day}`);
 
   return (
     <>
